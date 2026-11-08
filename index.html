@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculador de Distancia</title>
+    <style>
+        /* Estilos generales de la página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Contenedor del Formulario */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        /* Grupo de campos */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555555;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #2ecc71;
+            outline: none;
+        }
+
+        /* Botón de calcular */
+        button {
+            width: 100%;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Cuadro de resultados */
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f8f5;
+            border-left: 5px solid #2ecc71;
+            border-radius: 4px;
+            display: none; /* Oculto por defecto */
+        }
+
+        .result-box p {
+            margin: 5px 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Datos y Cálculo de Distancia</h2>
+    
+    <form id="distanceForm" onsubmit="calcularDistancia(event)">
+        <!-- Datos Personales -->
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required placeholder="Ej. Juan">
+        </div>
+
+        <div class="form-group">
+            <label for="paterno">Apellido Paterno:</label>
+            <input type="text" id="paterno" required placeholder="Ej. Pérez">
+        </div>
+
+        <div class="form-group">
+            <label for="materno">Apellido Materno:</label>
+            <input type="text" id="materno" required placeholder="Ej. Gómez">
+        </div>
+
+        <hr style="border: 0; height: 1px; background: #eee; margin: 20px 0;">
+
+        <!-- Datos Físicos -->
+        <div class="form-group">
+            <label for="velocidad">Velocidad (m/s o km/h):</label>
+            <input type="number" id="velocidad" step="any" min="0" required placeholder="Ej. 15">
+        </div>
+
+        <div class="form-group">
+            <label for="tiempo">Tiempo (s o h):</label>
+            <input type="number" id="tiempo" step="any" min="0" required placeholder="Ej. 10">
+        </div>
+
+        <button type="submit">Calcular Distancia</button>
+    </form>
+
+    <!-- Contenedor donde se mostrará la respuesta -->
+    <div id="result" class="result-box">
+        <p><strong>Usuario:</strong> <span id="resNombre"></span></p>
+        <p><strong>Distancia Calculada:</strong> <span id="resDistancia"></span> unidades</p>
+    </div>
+</div>
+
+<script>
+    function calcularDistancia(event) {
+        // Evita que la página se recargue al enviar el formulario
+        event.preventDefault();
+
+        // Obtener valores de los campos de texto
+        const nombre = document.getElementById('nombre').value;
+        const paterno = document.getElementById('paterno').value;
+        const materno = document.getElementById('materno').value;
+
+        // Obtener valores numéricos
+        const velocidad = parseFloat(document.getElementById('velocidad').value);
+        const tiempo = parseFloat(document.getElementById('tiempo').value);
+
+        // Fórmula: Distancia = Velocidad * Tiempo
+        const distancia = velocidad * tiempo;
+
+        // Formatear el nombre completo
+        const nombreCompleto = `${nombre} ${paterno} ${materno}`;
+
+        // Insertar los resultados en el HTML (fijando a 2 decimales el resultado)
+        document.getElementById('resNombre').innerText = nombreCompleto;
+        document.getElementById('resDistancia').innerText = distancia.toFixed(2);
+
+        // Mostrar el cuadro de resultados cambiando los estilos dinámicamente
+        document.getElementById('result').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
